@@ -1,0 +1,143 @@
+@page "/Adults"
+@using Assignment1.Data
+@using Assignment1.Models
+
+@inject IAdultsData AdultsData
+@inject NavigationManager NavMgr
+
+<h3>Adults list</h3>
+
+<p>
+    Filter by Id: <input type="number" @oninput="@((arg)=>FilterById(arg))"
+                         style="width: 50px"/>
+</p>
+<p>
+    Filter by Last Name: <input type="text" @oninput="@((arg)=>FilterByName(arg))"
+                              style="width: 50px"/>
+</p>
+
+@if (adultsToShow == null)
+{
+    <p>
+        <em> Loading...</em>
+    </p>
+} else if (!adultsToShow.Any())
+{
+    <p>
+        <em> No Adults items exist.Please add some.</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th> Hair color </th>
+            <th>Eye color</th>
+            <th>Age</th>
+            <th> Weight </th>
+            <th>Height</th>
+            <th>Sex</th>
+            <th>Job title</th>
+            <th>Salary</th>
+            <th>Remove</th>
+            
+            <AuthorizeView Policy="AdminRole">
+              <th>Edit</th>  
+            </AuthorizeView>
+            
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in adultsToShow)
+        {
+            <tr>
+                <td> @item.Id</td>
+                <td> @item.FirstName</td>
+                <td> @item.LastName</td>
+                <td> @item.HairColor</td>
+                <td> @item.EyeColor</td>
+                <td> @item.Age</td>
+                <td> @item.Weight</td>
+                <td> @item.Height</td>
+                <td> @item.Sex</td>
+                <td>@item.JobTitle.JobTitle</td>
+                <td>@item.JobTitle.Salary</td>
+                <td>
+                    <button @onclick="@(() => RemoveAdult(item.Id))">
+                        <i class="oi oi-trash" style="color: red"/>
+                    </button>
+                </td>
+                 <AuthorizeView Policy="AdminRole">
+                 <td>
+                     <button @onclick="@(() => Edit(item.Id))">
+                         <i class="oi oi-pencil" style="color: #1b6ec2"/>
+                     </button>
+                 </td>
+                  </AuthorizeView>
+            </tr>
+        }
+        </tbody>
+
+    </table>
+}
+
+@code
+{
+    private IList<Adult> adultsToShow;
+    private IList<Adult> allAdults;
+
+    private int? filterById;
+    private string? filterByName;
+
+    protected override async Task OnInitializedAsync()
+    {
+        allAdults = await AdultsData.GetAdultsAsync();
+        adultsToShow = allAdults;
+    }
+
+    private void RemoveAdult(int adultId)
+    {
+        Adult adultToRemove = allAdults.First(a => a.Id == adultId);
+        AdultsData.RemoveAdultAsync(adultId);
+        allAdults.Remove(adultToRemove);
+    }
+
+    private void FilterById(ChangeEventArgs changeEventArgs)
+    {
+        filterById = null;
+        try
+        {
+            filterById = int.Parse(changeEventArgs.Value.ToString());
+        }
+        catch (Exception e){}
+        Filter();
+
+    }
+
+    private void FilterByName(ChangeEventArgs cEventArgs)
+    {
+         filterByName = "";
+        try
+        {
+            filterByName = cEventArgs.Value.ToString();
+        }
+        catch (Exception e){}
+        
+       Filter();
+    }
+    private void Filter()
+    {
+        adultsToShow = allAdults.Where(a => (filterById != null && a.Id == filterById || filterById ==null) &&
+                                            
+                                            (filterByName!=null && a.LastName.Contains(filterByName) || filterByName==null)).ToList();
+    }
+
+    private void Edit(int Id)
+    {
+        NavMgr.NavigateTo($"Edit/{Id}");
+    }
+}

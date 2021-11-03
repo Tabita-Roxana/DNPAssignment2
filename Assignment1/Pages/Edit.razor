@@ -1,0 +1,55 @@
+@page "/Edit/{Id:int}"
+@attribute [Authorize(Policy = "AdminRole")]
+
+@using Assignment1.Data
+@using Assignment1.Models
+@using Microsoft.AspNetCore.Components
+@inject IAdultsData AdultsData
+@inject NavigationManager NavMgr
+
+<h3>Edit</h3>
+
+@if (adultToEdit == null)
+ {
+     <em> Adult not found!!!</em>
+ }
+ else
+ {
+     <EditForm Model="@adultToEdit" On OnValidSubmit="@Save">
+         <DataAnnotationsValidator/>
+         <ValidationSummary/>
+         
+         <div class = "form-group"> First name:<br/>
+                 <InputTextArea rows="1" @bind-Value="adultToEdit.FirstName"/>
+             </div>
+             <div class = "form-group"> Last name: <br/>
+                 <InputTextArea rows="1" @bind-Value="adultToEdit.LastName">
+                 </InputTextArea>
+             </div>
+         <div class="form-group">
+             Weight <br/>
+             <InputNumber rows ="1" @bind-Value="adultToEdit.Weight"/>
+         </div>
+         <p class="actions">
+             <button class="btn btn-outline-dark" type="submit"> Save</button>
+         </p>
+     </EditForm>
+ }
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    
+    private Adult adultToEdit;
+
+    protected override async Task OnInitializedAsync()
+    {
+        adultToEdit = await AdultsData.GetAsync(Id);
+    }
+
+    private async Task Save()
+    {
+        await AdultsData.EditAsync(adultToEdit);
+        NavMgr.NavigateTo("/Adults");
+    }
+}

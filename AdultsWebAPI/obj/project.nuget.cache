@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "B21/bdGHRvlcekWERgx31PoWvKM6HyAmCvhRPOsDf3R0KTlaw3LrLrxcwS+8xD8OprIBQEV+ltZmptTWHxZqUw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\tabit\\RiderProjects\\DNPAssignment2\\AdultsWebAPI\\AdultsWebAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\tabit\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\tabit\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\tabit\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
+    "C:\\Users\\tabit\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\tabit\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "C:\\Users\\tabit\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}
