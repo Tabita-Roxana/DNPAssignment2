@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AdultsWebAPI.Data;
+using AdultsWebAPI.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,9 +30,9 @@ namespace AdultsWebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<IFileContext, FileContext>();
-            services.AddScoped<IAdultsService, AdultsService>();
-            services.AddScoped<IUserService, InMemoryUserService>();
+            services.AddDbContext<AdultsContext>();
+            services.AddScoped<IAdultsService, SqliteAdultsService>();
+            services.AddScoped<IUserService, SqliteUserService>();
             
             services.AddSwaggerGen(c =>
             {

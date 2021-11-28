@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace AdultsWebAPI.Models
 {
     public class User

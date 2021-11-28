@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Assignment1.Models {
 public class Person {
     
+    [Key]
     public int Id { get; set; }
     [Required, MaxLength(50)]
     public string FirstName { get; set; }
